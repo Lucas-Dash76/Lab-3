@@ -19,6 +19,7 @@ import javafx.stage.Stage;
  *
  * @author 2389873
  */
+//https://github.com/Lucas-Dash76/Lab-3/tree/master
 public class Lab_3_Lucas_Dash extends Application{
 
     /**
@@ -67,7 +68,7 @@ public class Lab_3_Lucas_Dash extends Application{
         Button btn1 = new Button("Register");
         Button btn2 = new Button("Clear");
         gpane.add(btn1, 0, 5);
-        //btn1.setDisable(true);
+        btn1.setDisable(true);
         gpane.add(btn2, 1, 5);
        
         fnameField.setOnKeyTyped(e -> {
@@ -83,21 +84,72 @@ public class Lab_3_Lucas_Dash extends Application{
                pwfield.clear();
             
         });
-        
-        btn1.setOnAction(e -> {
-            if (emailfield.getText().contains("@")&&
-                    emailfield.getText().contains(".com")&&
-                    pwfield.getText().contains("1")) {
-                Label lbl = new Label("welcome");
-                gpane.add(lbl, 0, 6);
+        boolean[] t = {false, false, false, false};
+        fnameField.setOnKeyTyped(e -> {
+            t[0] = !fnameField.getText().isEmpty();
+            if (t[0] == true & t[1] == true & t[2] == true & t[3] == true) {
+                btn1.setDisable(false);
             }
             else {
-                Label lbl = new Label("error");
-                gpane.add(lbl, 0, 6);
+                btn1.setDisable(true);
+            }
+        });
+        lnamefield.setOnKeyTyped(e -> {
+            t[1] = !lnamefield.getText().isEmpty();
+            if (t[0] == true & t[1] == true & t[2] == true & t[3] == true) {
+                btn1.setDisable(false);
+            }
+            else {
+                btn1.setDisable(true);
+            }
+        });
+        emailfield.setOnKeyTyped(e -> {
+            t[2] = !emailfield.getText().isEmpty();
+            if (t[0] == true & t[1] == true & t[2] == true & t[3] == true) {
+                btn1.setDisable(false);
+            }
+            else {
+                btn1.setDisable(true);
+            }
+        });
+        pwfield.setOnKeyTyped(e -> {
+            t[3] = !pwfield.getText().isEmpty();
+            if (t[0] == true & t[1] == true & t[2] == true & t[3] == true) {
+                btn1.setDisable(false);
+            }
+            else {
+                btn1.setDisable(true);
+            }
+        });
+        Label lbl = new Label();
+        btn1.setOnAction(e -> {
+            boolean digit = false;
+            boolean letter = false;
+            for (int i = 0; i < pwfield.getText().length(); i++) {
+               if (Character.isDigit(pwfield.getText().charAt(i))) {
+                   digit = true;
+               }
+               if (Character.isLetter(pwfield.getText().charAt(i))) {
+                   letter = true;
+               }
+            
+            }
+            if (emailfield.getText().contains("@")&
+                    emailfield.getText().contains(".")&
+                            digit == true &
+                            letter == true) {
+                    
+                 lbl.setText("Welcome");
+                
+            }
+            
+            else {
+                lbl.setText("Error");
+                
             }
         });
         
-        
+        gpane.add(lbl, 0, 6);
         bp.setCenter(gpane);
         stage.setTitle("User Registration form");
         Scene s = new Scene(bp);
